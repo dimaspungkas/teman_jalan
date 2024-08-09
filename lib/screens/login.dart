@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:teman_jalan/screens/home.dart';
 import 'package:teman_jalan/utilities/range.dart';
 import 'package:teman_jalan/utilities/colors.dart';
+import 'package:teman_jalan/utilities/alertmessage.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key, required this.lastEmail});
@@ -20,6 +22,7 @@ class _LoginScreenState extends State<LoginScreen> {
   FocusNode nodePassword = FocusNode();
 
   bool hidePassword = true;
+  bool isProcess = false;
 
   @override
   void initState() {
@@ -29,6 +32,41 @@ class _LoginScreenState extends State<LoginScreen> {
     super.initState();
     if (widget.lastEmail != '') {
       myEmailController.text = widget.lastEmail;
+    }
+  }
+
+  bool validateAndSave() {
+    final form = formkey.currentState;
+
+    if (myEmailController.text == '' || myEmailController.text.isEmpty) {
+      var dialog = CustomAlertDialog(
+          type: 4, title: "Information", message: "Please input your email");
+      showDialog(context: context, builder: (BuildContext context) => dialog);
+      return false;
+    } else if (myPasswordController.text == '' ||
+        myPasswordController.text.isEmpty) {
+      var dialog = CustomAlertDialog(
+          type: 4, title: "Information", message: "Please input your password");
+      showDialog(context: context, builder: (BuildContext context) => dialog);
+      return false;
+    }
+    if (form!.validate()) {
+      form.save();
+
+      return true;
+    }
+    return false;
+  }
+
+  Future<void> loginAction() async {
+    try {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => HomeScreen(lastEmail: widget.lastEmail)),
+      );
+    } catch (e) {
+      CustomAlertDialog(type: 2, title: "Error", message: e.toString());
     }
   }
 
@@ -132,8 +170,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     const SizedBox(height: sizeMd),
                     Container(
-                      padding: EdgeInsets.symmetric(
-                          horizontal: MediaQuery.of(context).size.width * 0.03),
+                      padding: const EdgeInsets.symmetric(horizontal: sizeSm),
                       alignment: Alignment.centerLeft,
                       child: TextFormField(
                         controller: myPasswordController,
@@ -198,17 +235,16 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     Container(
                       width: double.infinity,
-                      padding: EdgeInsets.symmetric(
-                          horizontal: MediaQuery.of(context).size.width * 0.03),
+                      padding: const EdgeInsets.symmetric(horizontal: sizeSm),
                       child: ElevatedButton(
                         onPressed: () {
-                          // if (validateAndSave()) {
-                          //   setState(() {
-                          //     isApiCallProcess = true;
-                          //   });
+                          if (validateAndSave()) {
+                            setState(() {
+                              isProcess = true;
+                            });
 
-                          //   loginAction();
-                          // }
+                            loginAction();
+                          }
                         },
                         style: ElevatedButton.styleFrom(
                             padding: const EdgeInsets.all(0.0),
@@ -218,8 +254,8 @@ class _LoginScreenState extends State<LoginScreen> {
                               borderRadius:
                                   BorderRadius.all(Radius.circular(30.0))),
                           padding: EdgeInsets.symmetric(
-                              horizontal: MediaQuery.of(context).size.width *
-                                  0.03), //EdgeInsets.fromLTRB(20, 10, 20, 10),
+                              horizontal:
+                                  MediaQuery.of(context).size.width * 0.03),
                           width: MediaQuery.of(context).size.width,
                           height:
                               MediaQuery.of(context).size.height * 0.05, //55,
@@ -239,8 +275,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     Container(
                       width: double.infinity,
-                      padding: EdgeInsets.symmetric(
-                          horizontal: MediaQuery.of(context).size.width * 0.03),
+                      padding: const EdgeInsets.symmetric(horizontal: sizeSm),
                       child: ElevatedButton(
                         onPressed: () {
                           // if (validateAndSave()) {

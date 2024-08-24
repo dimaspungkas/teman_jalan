@@ -13,7 +13,7 @@ class CustomAlertDialog extends StatelessWidget {
   final Function? onNoPressed;
   final double circularBorderRadius;
 
-  CustomAlertDialog({
+  const CustomAlertDialog({
     super.key,
     required this.type, //1=confirm message , 2=error message , 3=success message ,4=info
     required this.title,

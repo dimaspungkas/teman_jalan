@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:teman_jalan/screens/home.dart';
+import 'package:teman_jalan/screens/signup.dart';
 import 'package:teman_jalan/utilities/range.dart';
 import 'package:teman_jalan/utilities/colors.dart';
 import 'package:teman_jalan/utilities/alertmessage.dart';
@@ -39,13 +40,13 @@ class _LoginScreenState extends State<LoginScreen> {
     final form = formkey.currentState;
 
     if (myEmailController.text == '' || myEmailController.text.isEmpty) {
-      var dialog = CustomAlertDialog(
+      var dialog = const CustomAlertDialog(
           type: 4, title: "Information", message: "Please input your email");
       showDialog(context: context, builder: (BuildContext context) => dialog);
       return false;
     } else if (myPasswordController.text == '' ||
         myPasswordController.text.isEmpty) {
-      var dialog = CustomAlertDialog(
+      var dialog = const CustomAlertDialog(
           type: 4, title: "Information", message: "Please input your password");
       showDialog(context: context, builder: (BuildContext context) => dialog);
       return false;
@@ -84,7 +85,8 @@ class _LoginScreenState extends State<LoginScreen> {
               Align(
                 alignment: Alignment.bottomCenter,
                 child: Container(
-                  height: MediaQuery.of(context).size.height * 0.55,
+                  padding: const EdgeInsets.only(top: sizeXl),
+                  height: MediaQuery.of(context).size.height,
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
                       begin: Alignment.bottomCenter,
@@ -98,8 +100,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       stops: const [0.1, 0.3, 0.6, 0.8],
                     ),
                   ),
-                  child:
-                      Image.asset('assets/images/Login.png', fit: BoxFit.cover),
+                  child: Image.asset('assets/images/bg-login.png',
+                      fit: BoxFit.cover),
                 ),
               ),
               Container(
@@ -111,17 +113,16 @@ class _LoginScreenState extends State<LoginScreen> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   verticalDirection: VerticalDirection.down,
                   children: <Widget>[
-                    const SizedBox(height: sizeXxl),
-                    Text(
-                      'HALO TEMAN JALAN!',
-                      style: TextStyle(
-                        color: primaryBlue,
-                        fontFamily: 'Josefin Sans',
-                        fontSize: MediaQuery.of(context).size.width * 0.08,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                    const SizedBox(height: sizeXl),
+                    const SizedBox(height: sizeXxl * 2.5),
+                    // Text(
+                    //   'HALO TEMAN JALAN!',
+                    //   style: TextStyle(
+                    //     color: primaryBlue,
+                    //     fontFamily: 'Josefin Sans',
+                    //     fontSize: MediaQuery.of(context).size.width * 0.08,
+                    //     fontWeight: FontWeight.w500,
+                    //   ),
+                    // ),
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: sizeSm),
                       alignment: Alignment.centerLeft,
@@ -130,7 +131,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         focusNode: nodeEmail,
                         keyboardType: TextInputType.emailAddress,
                         style: const TextStyle(
-                            color: primaryBlue,
+                            color: Colors.black,
                             fontFamily: 'Arial',
                             fontSize: sizeMd),
                         decoration: InputDecoration(
@@ -177,7 +178,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         focusNode: nodePassword,
                         obscureText: hidePassword,
                         style: const TextStyle(
-                            color: primaryBlue,
+                            color: Colors.black,
                             fontFamily: 'Arial',
                             fontSize: sizeMd),
                         decoration: InputDecoration(
@@ -278,13 +279,11 @@ class _LoginScreenState extends State<LoginScreen> {
                       padding: const EdgeInsets.symmetric(horizontal: sizeSm),
                       child: ElevatedButton(
                         onPressed: () {
-                          // if (validateAndSave()) {
-                          //   setState(() {
-                          //     isApiCallProcess = true;
-                          //   });
-
-                          //   loginAction();
-                          // }
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const SignUp()),
+                          );
                         },
                         style: ElevatedButton.styleFrom(
                             padding: const EdgeInsets.all(0.0),

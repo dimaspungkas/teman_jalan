@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:teman_jalan/screens/login.dart';
+import 'package:teman_jalan/screens/splashscreen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -22,7 +23,10 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const LoginScreen(lastEmail: ''),
+      home: const SplashScreen(),
+      routes: {
+        '/home': (context) => const LoginScreen(lastEmail: ""),
+      },
     );
   }
 }

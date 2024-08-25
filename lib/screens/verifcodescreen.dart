@@ -73,6 +73,7 @@ class _VerifCodeState extends State<VerifCode> {
       onPopInvoked: (popDisposition) => false,
       child: Scaffold(
         resizeToAvoidBottomInset: false,
+        backgroundColor: Colors.white,
         appBar: AppBar(
           toolbarHeight: MediaQuery.of(context).size.height * 0.07,
           automaticallyImplyLeading: false,

@@ -1,47 +1,44 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
-import 'package:teman_jalan/screens/buatjalandetail.dart';
 import 'package:teman_jalan/utilities/alertmessage.dart';
 import 'package:teman_jalan/utilities/colors.dart';
 import 'package:teman_jalan/utilities/range.dart';
 
-class BuatJalan extends StatefulWidget {
-  const BuatJalan({super.key, required this.lastEmail});
+class GelarTiker extends StatefulWidget {
+  const GelarTiker({super.key, required this.lastEmail});
   final String lastEmail;
   @override
-  State<BuatJalan> createState() => _BuatJalanState();
+  State<GelarTiker> createState() => _GelarTikerState();
 }
 
-class _BuatJalanState extends State<BuatJalan> {
+class _GelarTikerState extends State<GelarTiker> {
   GlobalKey<FormState> formkey = GlobalKey<FormState>();
   final scaffoldkey = GlobalKey<ScaffoldState>();
-  final namaTripController = TextEditingController();
-  final kuotaTripController = TextEditingController();
-  final satuanKuotaController = TextEditingController();
-  final titikTemuController = TextEditingController();
-  final titikPulangController = TextEditingController();
-  final tanggalBerangkatController = TextEditingController();
-  final tanggalPulangController = TextEditingController();
-  final tipeTripController = TextEditingController();
-  final noHPController = TextEditingController();
-  final deskripsiTripController = TextEditingController();
+  final namaItemController = TextEditingController();
+  final hargaItemController = TextEditingController();
+  final diskonItemController = TextEditingController();
+  final tanggalAwalDiskonController = TextEditingController();
+  final tanggalAkhirDiskonController = TextEditingController();
+  final kategoriController = TextEditingController();
+  final spesifikasiController = TextEditingController();
   final uploadImageController = TextEditingController();
 
-  FocusNode nodeNamaTrip = FocusNode();
-  FocusNode nodeKuotaTrip = FocusNode();
-  FocusNode nodeSatuanKuota = FocusNode();
-  FocusNode nodeTitikTemu = FocusNode();
+  FocusNode nodeNamaItem = FocusNode();
+  FocusNode nodeHargaItem = FocusNode();
+  FocusNode nodeCBDiskonItem = FocusNode();
+  FocusNode nodeDiskonItem = FocusNode();
   FocusNode nodeTitikPulang = FocusNode();
-  FocusNode nodeTanggalBerangkat = FocusNode();
-  FocusNode nodeTanggalPulang = FocusNode();
-  FocusNode nodeTipeTrip = FocusNode();
-  FocusNode nodeNoHP = FocusNode();
-  FocusNode nodeDeskripsi = FocusNode();
-  FocusNode nodeButtonNext = FocusNode();
+  FocusNode nodeTanggalAwalDiskon = FocusNode();
+  FocusNode nodeTanggalAkhirDiskon = FocusNode();
+  FocusNode nodeKategori = FocusNode();
+  FocusNode nodeSpesifikasi = FocusNode();
+  FocusNode nodeButtonSubmit = FocusNode();
+  FocusNode nodeButtonList = FocusNode();
 
   bool isProcess = false;
   bool isUploading = false;
+  bool _isCheckedDiskon = false;
 
   final DateTime _selectedDate1 = DateTime.now();
   final DateTime _selectedDate2 = DateTime.now();
@@ -80,11 +77,11 @@ class _BuatJalanState extends State<BuatJalan> {
 
   Future<void> nextAction() async {
     try {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => const BuatJalanDetail(lastEmail: "")),
-      );
+      // Navigator.push(
+      //   context,
+      //   MaterialPageRoute(
+      //       builder: (context) => const GelarTikerDetail(lastEmail: "")),
+      // );
     } catch (e) {
       CustomAlertDialog(type: 2, title: "Error", message: e.toString());
     }
@@ -99,7 +96,7 @@ class _BuatJalanState extends State<BuatJalan> {
     );
     if (picked != null && picked != _selectedDate1) {
       setState(() {
-        tanggalBerangkatController.text =
+        tanggalAwalDiskonController.text =
             DateFormat('yyyy-MM-dd').format(picked.toLocal());
       });
     }
@@ -114,7 +111,7 @@ class _BuatJalanState extends State<BuatJalan> {
     );
     if (picked != null && picked != _selectedDate2) {
       setState(() {
-        tanggalPulangController.text =
+        tanggalAkhirDiskonController.text =
             DateFormat('yyyy-MM-dd').format(picked.toLocal());
       });
     }
@@ -137,7 +134,7 @@ class _BuatJalanState extends State<BuatJalan> {
                 Container(
                   padding: const EdgeInsets.symmetric(
                       horizontal: 0.0, vertical: 0.0),
-                  height: MediaQuery.of(context).size.height * 0.66,
+                  height: MediaQuery.of(context).size.height * 0.6,
                   width: MediaQuery.of(context).size.width,
                   child: SingleChildScrollView(
                     child: Column(
@@ -199,14 +196,14 @@ class _BuatJalanState extends State<BuatJalan> {
                           ),
                         ),
                         const SizedBox(height: sizeSm),
-                        // Nama Trip
+                        // Nama Item
                         Container(
                           padding:
                               const EdgeInsets.symmetric(horizontal: sizeSm),
                           alignment: Alignment.centerLeft,
                           child: TextFormField(
-                            controller: namaTripController,
-                            focusNode: nodeNamaTrip,
+                            controller: namaItemController,
+                            focusNode: nodeNamaItem,
                             keyboardType: TextInputType.text,
                             style: const TextStyle(
                                 color: Colors.black,
@@ -222,7 +219,7 @@ class _BuatJalanState extends State<BuatJalan> {
                               ),
                               contentPadding: const EdgeInsets.symmetric(
                                   horizontal: sizeSm),
-                              hintText: 'Nama Trip',
+                              hintText: 'Nama Item',
                               hintStyle: const TextStyle(
                                   color: Colors.blueGrey,
                                   fontWeight: FontWeight.bold,
@@ -231,22 +228,20 @@ class _BuatJalanState extends State<BuatJalan> {
                             ),
                             onEditingComplete: () {
                               FocusScope.of(context)
-                                  .requestFocus(nodeKuotaTrip);
+                                  .requestFocus(nodeHargaItem);
                             },
                           ),
                         ),
                         const SizedBox(height: sizeSm),
-                        // Kuota Trip
+                        // Harga Item
                         Container(
                           padding:
                               const EdgeInsets.symmetric(horizontal: sizeSm),
                           alignment: Alignment.centerLeft,
                           child: TextFormField(
-                            controller: kuotaTripController,
-                            focusNode: nodeKuotaTrip,
+                            controller: hargaItemController,
+                            focusNode: nodeHargaItem,
                             keyboardType: TextInputType.number,
-                            maxLength: 3,
-                            maxLengthEnforcement: MaxLengthEnforcement.enforced,
                             style: const TextStyle(
                                 color: Colors.black,
                                 fontFamily: 'Arial',
@@ -254,7 +249,6 @@ class _BuatJalanState extends State<BuatJalan> {
                             decoration: InputDecoration(
                               filled: true,
                               fillColor: Colors.white54.withOpacity(0.5),
-                              counterText: '',
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10.0),
                                 borderSide: const BorderSide(
@@ -271,130 +265,85 @@ class _BuatJalanState extends State<BuatJalan> {
                             ),
                             onEditingComplete: () {
                               FocusScope.of(context)
-                                  .requestFocus(nodeSatuanKuota);
+                                  .requestFocus(nodeCBDiskonItem);
                             },
                           ),
                         ),
                         const SizedBox(height: sizeSm),
-                        // Satuan Kuota Trip
-                        Container(
-                          padding:
-                              const EdgeInsets.symmetric(horizontal: sizeSm),
-                          alignment: Alignment.centerLeft,
-                          child: TextFormField(
-                            controller: satuanKuotaController,
-                            focusNode: nodeSatuanKuota,
-                            keyboardType: TextInputType.text,
-                            style: const TextStyle(
-                                color: Colors.black,
-                                fontFamily: 'Arial',
-                                fontSize: sizeMd),
-                            decoration: InputDecoration(
-                              filled: true,
-                              fillColor: Colors.white54.withOpacity(0.5),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10.0),
-                                borderSide: const BorderSide(
-                                    color: secondBlue, width: 1.0),
+                        // Diskon Item
+                        Row(
+                          mainAxisSize: MainAxisSize.min,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Expanded(
+                              flex: 3,
+                              child: ListTile(
+                                contentPadding: const EdgeInsets.symmetric(
+                                    horizontal: sizeSm),
+                                minTileHeight: sizeSm,
+                                titleAlignment: ListTileTitleAlignment.center,
+                                horizontalTitleGap: 4,
+                                title: const Text(
+                                  'Diskon',
+                                  style: TextStyle(
+                                      fontSize: sizeMd,
+                                      fontFamily: 'Body/Font Family'),
+                                ),
+                                leading: Checkbox(
+                                  value: _isCheckedDiskon,
+                                  onChanged: (bool? value) {
+                                    setState(() {
+                                      _isCheckedDiskon = value!;
+                                    });
+                                  },
+                                ),
                               ),
-                              contentPadding: const EdgeInsets.symmetric(
-                                  horizontal: sizeSm),
-                              hintText: 'Satuan Kuota Trip',
-                              hintStyle: const TextStyle(
-                                  color: Colors.blueGrey,
-                                  fontWeight: FontWeight.bold,
-                                  fontFamily: 'Body/Font Family',
-                                  fontSize: sizeMd),
                             ),
-                            onEditingComplete: () {
-                              FocusScope.of(context)
-                                  .requestFocus(nodeTitikTemu);
-                            },
-                          ),
-                        ),
-                        const SizedBox(height: sizeSm),
-                        // Titik Temu
-                        Container(
-                          padding:
-                              const EdgeInsets.symmetric(horizontal: sizeSm),
-                          alignment: Alignment.centerLeft,
-                          child: TextFormField(
-                            controller: titikTemuController,
-                            focusNode: nodeTitikTemu,
-                            keyboardType: TextInputType.text,
-                            style: const TextStyle(
-                                color: Colors.black,
-                                fontFamily: 'Arial',
-                                fontSize: sizeMd),
-                            decoration: InputDecoration(
-                              filled: true,
-                              fillColor: Colors.white54.withOpacity(0.5),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10.0),
-                                borderSide: const BorderSide(
-                                    color: secondBlue, width: 1.0),
+                            Expanded(
+                              flex: 5,
+                              child: Container(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: sizeSm),
+                                alignment: Alignment.centerLeft,
+                                child: TextFormField(
+                                  controller: diskonItemController,
+                                  focusNode: nodeDiskonItem,
+                                  keyboardType: TextInputType.text,
+                                  style: const TextStyle(
+                                      color: Colors.black,
+                                      fontFamily: 'Arial',
+                                      fontSize: sizeMd),
+                                  decoration: InputDecoration(
+                                    filled: true,
+                                    fillColor: Colors.white54.withOpacity(0.5),
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(10.0),
+                                      borderSide: const BorderSide(
+                                          color: secondBlue, width: 1.0),
+                                    ),
+                                    contentPadding: const EdgeInsets.symmetric(
+                                        horizontal: sizeSm),
+                                    hintText: '% Diskon',
+                                    hintStyle: const TextStyle(
+                                        color: Colors.blueGrey,
+                                        fontWeight: FontWeight.bold,
+                                        fontFamily: 'Body/Font Family',
+                                        fontSize: sizeMd),
+                                  ),
+                                ),
                               ),
-                              contentPadding: const EdgeInsets.symmetric(
-                                  horizontal: sizeSm),
-                              hintText: 'Titik Temu',
-                              hintStyle: const TextStyle(
-                                  color: Colors.blueGrey,
-                                  fontWeight: FontWeight.bold,
-                                  fontFamily: 'Body/Font Family',
-                                  fontSize: sizeMd),
                             ),
-                            onEditingComplete: () {
-                              FocusScope.of(context)
-                                  .requestFocus(nodeTitikPulang);
-                            },
-                          ),
+                          ],
                         ),
                         const SizedBox(height: sizeSm),
-                        // Titik Pulang
+                        // Tanggal Awal Diskon
                         Container(
                           padding:
                               const EdgeInsets.symmetric(horizontal: sizeSm),
                           alignment: Alignment.centerLeft,
                           child: TextFormField(
-                            controller: titikPulangController,
-                            focusNode: nodeTitikPulang,
-                            keyboardType: TextInputType.text,
-                            style: const TextStyle(
-                                color: Colors.black,
-                                fontFamily: 'Arial',
-                                fontSize: sizeMd),
-                            decoration: InputDecoration(
-                              filled: true,
-                              fillColor: Colors.white54.withOpacity(0.5),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10.0),
-                                borderSide: const BorderSide(
-                                    color: secondBlue, width: 1.0),
-                              ),
-                              contentPadding: const EdgeInsets.symmetric(
-                                  horizontal: sizeSm),
-                              hintText: 'Titik Pulang',
-                              hintStyle: const TextStyle(
-                                  color: Colors.blueGrey,
-                                  fontWeight: FontWeight.bold,
-                                  fontFamily: 'Body/Font Family',
-                                  fontSize: sizeMd),
-                            ),
-                            onEditingComplete: () {
-                              FocusScope.of(context)
-                                  .requestFocus(nodeTanggalBerangkat);
-                            },
-                          ),
-                        ),
-                        const SizedBox(height: sizeSm),
-                        // Tanggal Berangkat
-                        Container(
-                          padding:
-                              const EdgeInsets.symmetric(horizontal: sizeSm),
-                          alignment: Alignment.centerLeft,
-                          child: TextFormField(
-                            controller: tanggalBerangkatController,
-                            focusNode: nodeTanggalBerangkat,
+                            controller: tanggalAwalDiskonController,
+                            focusNode: nodeTanggalAwalDiskon,
                             readOnly: true,
                             keyboardType: TextInputType.text,
                             style: const TextStyle(
@@ -411,7 +360,7 @@ class _BuatJalanState extends State<BuatJalan> {
                               ),
                               contentPadding: const EdgeInsets.symmetric(
                                   horizontal: sizeSm),
-                              hintText: 'Tanggal Berangkat',
+                              hintText: 'Tanggal Awal Diskon',
                               hintStyle: const TextStyle(
                                   color: Colors.blueGrey,
                                   fontWeight: FontWeight.bold,
@@ -421,19 +370,19 @@ class _BuatJalanState extends State<BuatJalan> {
                             onTap: () => _selectDate1(context),
                             onEditingComplete: () {
                               FocusScope.of(context)
-                                  .requestFocus(nodeTanggalPulang);
+                                  .requestFocus(nodeTanggalAkhirDiskon);
                             },
                           ),
                         ),
                         const SizedBox(height: sizeSm),
-                        // Tanggal Pulang
+                        // Tanggal Akhir Diskon
                         Container(
                           padding:
                               const EdgeInsets.symmetric(horizontal: sizeSm),
                           alignment: Alignment.centerLeft,
                           child: TextFormField(
-                            controller: tanggalPulangController,
-                            focusNode: nodeTanggalPulang,
+                            controller: tanggalAkhirDiskonController,
+                            focusNode: nodeTanggalAkhirDiskon,
                             readOnly: true,
                             keyboardType: TextInputType.text,
                             style: const TextStyle(
@@ -450,7 +399,7 @@ class _BuatJalanState extends State<BuatJalan> {
                               ),
                               contentPadding: const EdgeInsets.symmetric(
                                   horizontal: sizeSm),
-                              hintText: 'Tanggal Pulang',
+                              hintText: 'Tanggal Akhir Diskon',
                               hintStyle: const TextStyle(
                                   color: Colors.blueGrey,
                                   fontWeight: FontWeight.bold,
@@ -459,120 +408,20 @@ class _BuatJalanState extends State<BuatJalan> {
                             ),
                             onTap: () => _selectDate2(context),
                             onEditingComplete: () {
-                              FocusScope.of(context).requestFocus(nodeTipeTrip);
+                              FocusScope.of(context).requestFocus(nodeKategori);
                             },
                           ),
                         ),
                         const SizedBox(height: sizeSm),
-                        // Tipe Trip
-                        Row(
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Expanded(
-                              flex: 1,
-                              child: ListTile(
-                                contentPadding:
-                                    const EdgeInsets.symmetric(horizontal: 0.0),
-                                minTileHeight: sizeSm,
-                                titleAlignment: ListTileTitleAlignment.center,
-                                horizontalTitleGap: 4,
-                                title: const Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  verticalDirection: VerticalDirection.down,
-                                  children: <Widget>[
-                                    Align(
-                                      alignment: Alignment.centerLeft,
-                                      child: Text(
-                                        'Mandiri',
-                                        style: TextStyle(
-                                            fontSize: sizeMd,
-                                            fontFamily: 'Body/Font Family'),
-                                      ),
-                                    ),
-                                    Align(
-                                      alignment: Alignment.centerLeft,
-                                      child: Text(
-                                        'Buat Trip Sendiri',
-                                        style: TextStyle(
-                                            fontSize: sizeSm * 0.8,
-                                            fontFamily: 'Body/Font Family',
-                                            color: greyText),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                leading: Radio<int>(
-                                  value: 1,
-                                  activeColor: primaryBlue,
-                                  groupValue: selectedOption,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      selectedOption = value;
-                                    });
-                                  },
-                                ),
-                              ),
-                            ),
-                            Expanded(
-                              flex: 1,
-                              child: ListTile(
-                                contentPadding:
-                                    const EdgeInsets.symmetric(horizontal: 0.0),
-                                minTileHeight: sizeSm,
-                                titleAlignment: ListTileTitleAlignment.center,
-                                horizontalTitleGap: 4,
-                                title: const Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  verticalDirection: VerticalDirection.down,
-                                  children: <Widget>[
-                                    Align(
-                                      alignment: Alignment.centerLeft,
-                                      child: Text(
-                                        'Kolaborasi',
-                                        style: TextStyle(
-                                            fontSize: sizeMd,
-                                            fontFamily: 'Body/Font Family'),
-                                      ),
-                                    ),
-                                    Align(
-                                      alignment: Alignment.centerLeft,
-                                      child: Text(
-                                        'Bareng Destinasi Pilihan',
-                                        style: TextStyle(
-                                            fontSize: sizeSm * 0.8,
-                                            fontFamily: 'Body/Font Family',
-                                            color: greyText),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                leading: Radio<int>(
-                                  value: 2,
-                                  activeColor: primaryBlue,
-                                  groupValue: selectedOption,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      selectedOption = value;
-                                    });
-                                  },
-                                ),
-                              ),
-                            ),
-                          ],
-                        ), // Nama Lengkap
-                        const SizedBox(height: sizeSm),
-                        // No. Hp
+                        // Kategori
                         Container(
                           padding:
                               const EdgeInsets.symmetric(horizontal: sizeSm),
                           alignment: Alignment.centerLeft,
                           child: TextFormField(
-                            controller: noHPController,
-                            focusNode: nodeNoHP,
+                            controller: kategoriController,
+                            focusNode: nodeKategori,
                             keyboardType: TextInputType.text,
-                            maxLength: 14,
-                            maxLengthEnforcement: MaxLengthEnforcement.enforced,
                             style: const TextStyle(
                                 color: Colors.black,
                                 fontFamily: 'Arial',
@@ -580,7 +429,6 @@ class _BuatJalanState extends State<BuatJalan> {
                             decoration: InputDecoration(
                               filled: true,
                               fillColor: Colors.white54.withOpacity(0.5),
-                              counterText: '',
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10.0),
                                 borderSide: const BorderSide(
@@ -588,7 +436,7 @@ class _BuatJalanState extends State<BuatJalan> {
                               ),
                               contentPadding: const EdgeInsets.symmetric(
                                   horizontal: sizeSm),
-                              hintText: 'No. HP',
+                              hintText: 'Kategori',
                               hintStyle: const TextStyle(
                                   color: Colors.blueGrey,
                                   fontWeight: FontWeight.bold,
@@ -597,7 +445,7 @@ class _BuatJalanState extends State<BuatJalan> {
                             ),
                             onEditingComplete: () {
                               FocusScope.of(context)
-                                  .requestFocus(nodeDeskripsi);
+                                  .requestFocus(nodeSpesifikasi);
                             },
                           ),
                         ),
@@ -608,11 +456,11 @@ class _BuatJalanState extends State<BuatJalan> {
                               const EdgeInsets.symmetric(horizontal: sizeSm),
                           alignment: Alignment.centerLeft,
                           child: TextFormField(
-                            controller: deskripsiTripController,
-                            focusNode: nodeDeskripsi,
+                            controller: spesifikasiController,
+                            focusNode: nodeSpesifikasi,
                             keyboardType: TextInputType.text,
-                            maxLines: 4,
-                            maxLength: 500,
+                            maxLines: 3,
+                            maxLength: 250,
                             style: const TextStyle(
                                 color: Colors.black,
                                 fontFamily: 'Arial',
@@ -627,7 +475,7 @@ class _BuatJalanState extends State<BuatJalan> {
                               ),
                               contentPadding: const EdgeInsets.symmetric(
                                   horizontal: sizeSm, vertical: sizeSm),
-                              hintText: 'Deskripsi Trip',
+                              hintText: 'Spesifikasi',
                               hintStyle: const TextStyle(
                                   color: Colors.blueGrey,
                                   fontWeight: FontWeight.bold,
@@ -636,7 +484,7 @@ class _BuatJalanState extends State<BuatJalan> {
                             ),
                             onEditingComplete: () {
                               FocusScope.of(context)
-                                  .requestFocus(nodeButtonNext);
+                                  .requestFocus(nodeButtonSubmit);
                             },
                           ),
                         ),
@@ -650,7 +498,7 @@ class _BuatJalanState extends State<BuatJalan> {
                   child: Container(
                     width: double.infinity,
                     padding: const EdgeInsets.symmetric(
-                        horizontal: sizeSm * 0.5, vertical: sizeXxl),
+                        horizontal: sizeSm * 0.5, vertical: sizeXxl * 2.2),
                     child: ElevatedButton(
                       onPressed: () {
                         if (validateAndSave()) {
@@ -661,7 +509,7 @@ class _BuatJalanState extends State<BuatJalan> {
                           nextAction();
                         }
                       },
-                      focusNode: nodeButtonNext,
+                      focusNode: nodeButtonSubmit,
                       style: ElevatedButton.styleFrom(
                           padding: const EdgeInsets.all(0.0),
                           backgroundColor: primaryBlue),
@@ -678,7 +526,49 @@ class _BuatJalanState extends State<BuatJalan> {
                         height: MediaQuery.of(context).size.height * 0.05, //55,
                         child: const Align(
                           child: Text(
-                            'Lanjut',
+                            'Submit',
+                            style: TextStyle(
+                              color: Colors.white,
+                              letterSpacing: 0.2,
+                              fontSize: sizeMd,
+                              fontWeight: FontWeight.w700,
+                              fontFamily: 'Urbanist',
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: sizeSm * 0.5, vertical: sizeXxl),
+                    child: ElevatedButton(
+                      onPressed: () {
+                        // Navigator.push(
+                        //   context,
+                        //   MaterialPageRoute(
+                        //       builder: (context) => const SignUp()),
+                        // );
+                      },
+                      style: ElevatedButton.styleFrom(
+                          padding: const EdgeInsets.all(0.0),
+                          backgroundColor: primaryPurple),
+                      child: Container(
+                        decoration: const BoxDecoration(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(30.0))),
+                        padding: EdgeInsets.symmetric(
+                            horizontal: MediaQuery.of(context).size.width *
+                                0.03), //EdgeInsets.fromLTRB(20, 10, 20, 10),
+                        width: MediaQuery.of(context).size.width,
+                        height: MediaQuery.of(context).size.height * 0.05, //55,
+                        child: const Align(
+                          child: Text(
+                            'List',
                             style: TextStyle(
                               color: Colors.white,
                               letterSpacing: 0.2,

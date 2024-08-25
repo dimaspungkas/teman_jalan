@@ -147,6 +147,7 @@ class _BuatJalanDetailState extends State<BuatJalanDetail> {
       onPopInvoked: (popDisposition) => false,
       child: Scaffold(
         key: scaffoldkey,
+        backgroundColor: Colors.white,
         resizeToAvoidBottomInset: false,
         appBar: PreferredSize(
           preferredSize: Size(0.0, MediaQuery.of(context).size.height * 0.1),
@@ -838,6 +839,7 @@ class _BuatJalanDetailState extends State<BuatJalanDetail> {
                           nextAction();
                         }
                       },
+                      focusNode: nodeButtonNext,
                       style: ElevatedButton.styleFrom(
                           padding: const EdgeInsets.all(0.0),
                           backgroundColor: primaryBlue),

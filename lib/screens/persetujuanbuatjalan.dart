@@ -33,6 +33,7 @@ class _PersetujuanBuatJalanState extends State<PersetujuanBuatJalan> {
       child: Scaffold(
         key: scaffoldkey,
         resizeToAvoidBottomInset: false,
+        backgroundColor: Colors.white,
         appBar: AppBar(
           toolbarHeight: MediaQuery.of(context).size.height * 0.07,
           automaticallyImplyLeading: false,

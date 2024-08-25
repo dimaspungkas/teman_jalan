@@ -87,6 +87,7 @@ class _LoginScreenState extends State<LoginScreen> {
     return Scaffold(
       key: scaffoldkey,
       resizeToAvoidBottomInset: false,
+      backgroundColor: Colors.white,
       body: AnnotatedRegion<SystemUiOverlayStyle>(
         value: SystemUiOverlayStyle.light,
         child: Form(
@@ -310,16 +311,17 @@ class _LoginScreenState extends State<LoginScreen> {
                           height:
                               MediaQuery.of(context).size.height * 0.05, //55,
                           child: const Align(
-                              child: Text(
-                            'Daftar',
-                            style: TextStyle(
-                              color: Colors.white,
-                              letterSpacing: 0.2,
-                              fontSize: sizeMd,
-                              fontWeight: FontWeight.w700,
-                              fontFamily: 'Urbanist',
+                            child: Text(
+                              'Daftar',
+                              style: TextStyle(
+                                color: Colors.white,
+                                letterSpacing: 0.2,
+                                fontSize: sizeMd,
+                                fontWeight: FontWeight.w700,
+                                fontFamily: 'Urbanist',
+                              ),
                             ),
-                          )),
+                          ),
                         ),
                       ),
                     )

@@ -71,6 +71,7 @@ class _ScanKTPState extends State<ScanKTP> {
       child: Scaffold(
         key: scaffoldkey,
         resizeToAvoidBottomInset: false,
+        backgroundColor: Colors.white,
         appBar: PreferredSize(
           preferredSize: Size(0.0, MediaQuery.of(context).size.height * 0.1),
           child: AppBar(

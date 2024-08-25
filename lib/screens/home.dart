@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:teman_jalan/screens/buatjalan.dart';
+import 'package:teman_jalan/screens/gelartiker.dart';
 import 'package:teman_jalan/screens/homepage.dart';
 import 'package:teman_jalan/screens/login.dart';
 import 'package:teman_jalan/utilities/colors.dart';
@@ -39,7 +40,7 @@ class _HomeScreenState extends State<HomeScreen> {
   final List<Widget> _widgetOptions = <Widget>[
     const HomePageScreen(lastEmail: ""),
     const BuatJalan(lastEmail: ""),
-    const Text('Gelar Tiker', style: TextStyle(fontSize: sizeMd)),
+    const GelarTiker(lastEmail: ""),
   ];
 
   PreferredSizeWidget? selectedIndex(BuildContext context, item) {
@@ -47,61 +48,34 @@ class _HomeScreenState extends State<HomeScreen> {
       return PreferredSize(
         preferredSize: Size(0.0, MediaQuery.of(context).size.height * 0.1),
         child: AppBar(
-          toolbarHeight: MediaQuery.of(context).size.height * 0.09,
+          toolbarHeight: MediaQuery.of(context).size.height * 0.07,
           automaticallyImplyLeading: false,
           flexibleSpace: Container(
             decoration: const BoxDecoration(
-              color: primaryBlue,
-              borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(20),
-                bottomRight: Radius.circular(20),
-              ),
+              color: Colors.white,
             ),
           ),
           leading: IconButton(
-            icon: Image.asset("assets/images/Icon_Smiles.png"),
+            icon: const Icon(Icons.arrow_back),
             onPressed: () {
               Navigator.of(context).pushAndRemoveUntil(
                   MaterialPageRoute(
-                      builder: (context) =>
-                          LoginScreen(lastEmail: widget.lastEmail)),
+                      builder: (context) => HomeScreen(
+                            lastEmail: widget.lastEmail,
+                            selectedMenu: 0,
+                          )),
                   (route) => false);
             },
           ),
-          actions: [
-            IconButton(
-              icon: Image.asset("assets/images/Icon_Notification.png"),
-              onPressed: () {
-                print('Notifications icon pressed');
-              },
-            ),
-            IconButton(
-              icon: Image.asset(
-                "assets/images/Icon_Settings.png",
-              ),
-              onPressed: () {
-                print('Search icon pressed');
-              },
-            ),
-          ],
-          bottom: PreferredSize(
-            preferredSize: const Size(0.0, sizeSm * 0.8),
-            child: Align(
-              alignment: Alignment.topLeft,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: sizeMd, vertical: sizeSm),
-                child: Text(
-                  "Hi, $username! Mau Jalan Kemana Lagi?",
-                  style: const TextStyle(
-                      color: Colors.black,
-                      fontSize: sizeMd * 1.2,
-                      fontFamily: 'Headline Small/Font',
-                      fontWeight: FontWeight.w400),
-                ),
-              ),
-            ),
+          title: const Text(
+            "Gelar Tiker Kamu",
+            style: TextStyle(
+                color: Colors.black,
+                fontSize: sizeMd * 1.2,
+                fontFamily: 'Arial',
+                fontWeight: FontWeight.w700),
           ),
+          centerTitle: true,
         ),
       );
     } else if (item == 1) {
@@ -214,6 +188,7 @@ class _HomeScreenState extends State<HomeScreen> {
       onPopInvoked: (popDisposition) => false,
       child: Scaffold(
         resizeToAvoidBottomInset: false,
+        backgroundColor: Colors.white,
         appBar: selectedIndex(context, _selectedIndex),
         body: Container(
           padding: const EdgeInsets.symmetric(horizontal: sizeSm),

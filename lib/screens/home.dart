@@ -7,8 +7,10 @@ import 'package:teman_jalan/utilities/colors.dart';
 import 'package:teman_jalan/utilities/range.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key, required this.lastEmail});
+  const HomeScreen(
+      {super.key, required this.lastEmail, required this.selectedMenu});
   final String lastEmail;
+  final int selectedMenu;
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
@@ -28,6 +30,9 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     if (widget.lastEmail != '') {
       myEmailController.text = widget.lastEmail;
+    }
+    if (widget.selectedMenu > 0) {
+      _onItemTapped(widget.selectedMenu);
     }
   }
 
@@ -113,7 +118,13 @@ class _HomeScreenState extends State<HomeScreen> {
           leading: IconButton(
             icon: const Icon(Icons.arrow_back),
             onPressed: () {
-              _onItemTapped(1);
+              Navigator.of(context).pushAndRemoveUntil(
+                  MaterialPageRoute(
+                      builder: (context) => HomeScreen(
+                            lastEmail: widget.lastEmail,
+                            selectedMenu: 0,
+                          )),
+                  (route) => false);
             },
           ),
           title: const Text(

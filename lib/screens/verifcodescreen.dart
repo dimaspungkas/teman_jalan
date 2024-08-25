@@ -27,12 +27,6 @@ class _VerifCodeState extends State<VerifCode> {
     super.initState();
   }
 
-  @override
-  void dispose() {
-    _timer.cancel();
-    super.dispose();
-  }
-
   void startTimer() {
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       if (_start > 0) {

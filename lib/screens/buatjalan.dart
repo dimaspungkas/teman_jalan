@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
+import 'package:teman_jalan/screens/buatjalandetail.dart';
 import 'package:teman_jalan/utilities/alertmessage.dart';
 import 'package:teman_jalan/utilities/colors.dart';
 import 'package:teman_jalan/utilities/range.dart';
@@ -79,10 +80,11 @@ class _BuatJalanState extends State<BuatJalan> {
 
   Future<void> nextAction() async {
     try {
-      // Navigator.push(
-      //   context,
-      //   MaterialPageRoute(builder: (context) => const Security()),
-      // );
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => const BuatJalanDetail(lastEmail: "")),
+      );
     } catch (e) {
       CustomAlertDialog(type: 2, title: "Error", message: e.toString());
     }

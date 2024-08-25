@@ -40,7 +40,7 @@ class _SignUpState extends State<SignUp> {
   bool hideConfirmPassword = true;
   bool isProcess = false;
 
-  DateTime _selectedDate = DateTime.now();
+  final DateTime _selectedDate = DateTime.now();
   int? selectedOption = 1;
 
   @override
@@ -156,7 +156,7 @@ class _SignUpState extends State<SignUp> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Expanded(
-                              flex: 1,
+                              flex: 3,
                               child: ListTile(
                                 contentPadding:
                                     const EdgeInsets.symmetric(horizontal: 0.0),
@@ -166,7 +166,7 @@ class _SignUpState extends State<SignUp> {
                                 title: const Text(
                                   'Pribadi',
                                   style: TextStyle(
-                                      fontSize: sizeSm,
+                                      fontSize: sizeMd,
                                       fontFamily: 'Body/Font Family'),
                                 ),
                                 leading: Radio<int>(
@@ -182,7 +182,7 @@ class _SignUpState extends State<SignUp> {
                               ),
                             ),
                             Expanded(
-                              flex: 1,
+                              flex: 4,
                               child: ListTile(
                                 contentPadding:
                                     const EdgeInsets.symmetric(horizontal: 0.0),
@@ -192,7 +192,7 @@ class _SignUpState extends State<SignUp> {
                                 title: const Text(
                                   'Organisasi / Badan',
                                   style: TextStyle(
-                                      fontSize: sizeSm,
+                                      fontSize: sizeMd,
                                       fontFamily: 'Body/Font Family'),
                                 ),
                                 leading: Radio<int>(
@@ -209,6 +209,7 @@ class _SignUpState extends State<SignUp> {
                             ),
                           ],
                         ), // Nama Lengkap
+                        const SizedBox(height: sizeSm),
                         Container(
                           padding:
                               const EdgeInsets.symmetric(horizontal: sizeSm),

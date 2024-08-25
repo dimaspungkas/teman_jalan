@@ -61,10 +61,21 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Future<void> loginAction() async {
     try {
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          });
+      await Future.delayed(const Duration(seconds: 2));
       Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) => HomeScreen(lastEmail: widget.lastEmail)),
+            builder: (context) => HomeScreen(
+                  lastEmail: widget.lastEmail,
+                  selectedMenu: 0,
+                )),
       );
     } catch (e) {
       CustomAlertDialog(type: 2, title: "Error", message: e.toString());

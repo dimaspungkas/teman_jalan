@@ -79,6 +79,7 @@ flutter:
     - assets/images/Icon_Smiles.png
     - assets/images/Icon_Settings.png
     - assets/images/Icon_Notification.png
+    - assets/images/scanKTP.png
     - assets/videos/Splash_Video.mp4
     - assets/videos/Splash_Video2.mp4
   #   - images/a_dot_ham.jpeg

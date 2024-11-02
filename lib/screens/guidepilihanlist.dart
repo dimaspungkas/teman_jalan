@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:teman_jalan/screens/home.dart';
 
 class GuideListScreen extends StatelessWidget {
+  final lastEmailController = TextEditingController();
   final List<GuideData> guides = [
     GuideData("Yusri", "Batam", "Guide OverPower", "Rp 350,000.00 / Hari"),
     GuideData("Beyu", "Lombok", "Guide Meta", "Rp 450,000.00 / Hari"),
@@ -18,7 +20,16 @@ class GuideListScreen extends StatelessWidget {
         backgroundColor: Colors.blue[300],
         leading: IconButton(
           icon: Icon(Icons.arrow_back, color: Colors.black),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.of(context).pushAndRemoveUntil(
+                MaterialPageRoute(
+                  builder: (context) => const HomeScreen(
+                    lastEmail: "",
+                    selectedMenu: 0,
+                  ),
+                ),
+                (route) => false);
+          },
         ),
         title: Row(
           children: [
@@ -41,7 +52,10 @@ class GuideListScreen extends StatelessWidget {
             child: ListView.builder(
               itemCount: guides.length,
               itemBuilder: (context, index) {
-                return GuideListItem(guide: guides[index]);
+                return GuideListItem(
+                  guide: guides[index],
+                  lastEmail: lastEmailController.text,
+                );
               },
             ),
           ),
@@ -83,9 +97,10 @@ class GuideListScreen extends StatelessWidget {
 }
 
 class GuideListItem extends StatelessWidget {
+  const GuideListItem(
+      {super.key, required this.lastEmail, required this.guide});
   final GuideData guide;
-
-  const GuideListItem({Key? key, required this.guide}) : super(key: key);
+  final String lastEmail;
 
   @override
   Widget build(BuildContext context) {

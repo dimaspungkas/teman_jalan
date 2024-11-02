@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
+import 'package:teman_jalan/screens/guidepilihanlist.dart';
 import 'package:teman_jalan/utilities/colors.dart';
 import 'package:teman_jalan/utilities/range.dart';
 
@@ -569,10 +570,18 @@ class _HomePageScreenState extends State<HomePageScreen> {
                     ],
                   ),
                 ),
-                const Expanded(
+                Expanded(
                   flex: 1,
-                  child: Icon(Icons.arrow_forward),
-                )
+                  child: GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => GuideListScreen()),
+                        );
+                      },
+                      child: const Icon(Icons.arrow_forward)),
+                ),
               ],
             ),
           ),

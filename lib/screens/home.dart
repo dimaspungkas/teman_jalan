@@ -243,8 +243,8 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
             Positioned(
-              top: _selectedIndex == 0 ? -40.0 : 0.0,
-              left: MediaQuery.of(context).size.width / 8 - 38,
+              top: _selectedIndex == 0 ? -44.0 : 0.0,
+              left: MediaQuery.of(context).size.width / 24,
               child: Container(
                 padding: EdgeInsets.symmetric(
                     vertical: MediaQuery.of(context).size.height * 0.001,
@@ -274,8 +274,9 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
             Positioned(
-              top: _selectedIndex == 1 ? -40.0 : 0.0,
-              left: MediaQuery.of(context).size.width / 3 + 12,
+              top: _selectedIndex == 1 ? -44.0 : 0.0,
+              left: sizeXxl,
+              right: sizeXxl,
               child: Container(
                 padding: EdgeInsets.symmetric(
                     vertical: MediaQuery.of(context).size.height * 0.001,
@@ -305,8 +306,8 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
             Positioned(
-              top: _selectedIndex == 2 ? -40.0 : 0.0,
-              left: MediaQuery.of(context).size.width / 1.5 + 12,
+              top: _selectedIndex == 2 ? -44.0 : 0.0,
+              right: MediaQuery.of(context).size.width / 24,
               child: Container(
                 padding: EdgeInsets.symmetric(
                     vertical: MediaQuery.of(context).size.height * 0.001,
